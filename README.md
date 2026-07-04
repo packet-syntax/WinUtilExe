@@ -1,5 +1,5 @@
 # WinUtilExe
----
+
 
 ## Overview
 WinUtilExe is a precompiled executable version made in **Rust** of [Chris Titus WinUtil](https://github.com/ChrisTitusTech/winutil).
@@ -34,5 +34,12 @@ cargo build --release
 **Output:**
 
 The compiled executable will be located in `./target/release/WinUtilExe.exe`.
+
+**Usage:**
+
+```bash
+./WinUtilExe.exe 
+```
+or run double-click the executable.
 
 ## End Of README
