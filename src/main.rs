@@ -8,7 +8,27 @@ use windows::Win32::UI::Shell::ShellExecuteW;
 use windows::Win32::UI::WindowsAndMessaging::SW_SHOW;
 use windows::core::PCWSTR;
 
+use windows::Win32::System::Console::{
+    CONSOLE_MODE, ENABLE_VIRTUAL_TERMINAL_PROCESSING, GetStdHandle, STD_OUTPUT_HANDLE,
+    SetConsoleMode,
+};
+
 fn main() {
+    unsafe {
+        if let Ok(handle) = GetStdHandle(STD_OUTPUT_HANDLE) {
+            let mut mode = CONSOLE_MODE(0);
+            if GetConsoleMode(handle, &mut mode).is_ok() {
+                // Enable the virtual terminal processing flag for ANSI colors
+                let _ = SetConsoleMode(
+                    handle,
+                    CONSOLE_MODE(mode.0 | ENABLE_VIRTUAL_TERMINAL_PROCESSING.0),
+                );
+            }
+        }
+    }
+
+    colored::control::set_override(true);
+
     println!(
         "{}",
         "  ==================================================".bright_blue()
@@ -83,3 +103,5 @@ fn main() {
         }
     }
 }
+
+use windows::Win32::System::Console::GetConsoleMode;
